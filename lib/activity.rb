@@ -6,6 +6,7 @@ class Activity
   def initialize(name, participants)
     @name = name
     @participants = [participants]
+    @participant_cost = []
   end
 
   def participant_names
@@ -26,5 +27,15 @@ class Activity
 
   def total_cost
     finding_cost.sum
+  end
+
+  def splitting_cost
+    finding_cost.sum / @participants.count
+  end
+
+  def paying_evenly
+    @participants.map do |participant|
+      splitting_cost - participant[:cost]
+    end
   end
 end
