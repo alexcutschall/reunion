@@ -6,7 +6,7 @@ class Activity
   def initialize(name, participants)
     @name = name
     @participants = [participants]
-    @participant_cost = []
+
   end
 
   def participant_names

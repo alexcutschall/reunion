@@ -28,4 +28,40 @@ class ReunionTest < Minitest::Test
     @reunion.add_activities(new_activity)
     assert_equal 2, @reunion.activity.count
   end
+
+  def test_can_find_cost_of_each_activity
+    new_activity = Activity.new("Tanning", {:name => "Mark", :cost => 150})
+    @reunion.add_activities(new_activity)
+
+    assert_equal [50, 150], @reunion.find_participant_costs
+  end
+
+  def test_can_find_total_cost_of_activities
+    new_activity = Activity.new("Tanning", {:name => "Mark", :cost => 150})
+    @reunion.add_activities(new_activity)
+
+    assert_equal 200, @reunion.total_cost
+  end
+
+  def test_can_find_total_number_of_participants
+    new_activity = Activity.new("Tanning", {:name => "Mark", :cost => 150})
+    @reunion.add_activities(new_activity)
+
+    assert_equal 2, @reunion.total_number_of_participants
+  end
+
+  def test_can_split_reunion_cost_evenly
+    new_activity = Activity.new("Tanning", {:name => "Mark", :cost => 150})
+    @reunion.add_activities(new_activity)
+
+    assert_equal 100, @reunion.splitting_reunion_evenly
+  end
+
+  def test_can_print_status_if_someone_paid_too_much_or_too_little
+    new_activity = Activity.new("Tanning", {:name => "Mark", :cost => 150})
+    @reunion.add_activities(new_activity)
+
+    assert_instance_of Activity, @reunion.cost_for_participants[0]
+    assert_instance_of Activity,  @reunion.cost_for_participants[1]
+  end
 end
