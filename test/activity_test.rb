@@ -39,4 +39,20 @@ class ActivityTest < Minitest::Test
 
     assert_equal 150, @activity.total_cost
   end
+
+  def test_can_split_up_total_cost_of_activity
+    @activity.add_participants({:name => "Mark", :cost => 100})
+    assert_equal 150, @activity.total_cost
+
+    assert_equal 75, @activity.splitting_cost
+  end
+
+  def test_each_person_gets_back_money_or_pays_more
+    @activity.add_participants({:name => "Mark", :cost => 100})
+    @activity.add_participants({:name => "Frank", :cost => 150})
+    assert_equal 300, @activity.total_cost
+    assert_equal 100, @activity.splitting_cost
+
+    assert_equal [50, 0, -50], @activity.paying_evenly
+  end
 end
